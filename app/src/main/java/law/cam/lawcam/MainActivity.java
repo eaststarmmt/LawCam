@@ -37,8 +37,7 @@ public class MainActivity extends AppCompatActivity implements AutoPermissionsLi
 
             imageView.setImageBitmap(bitmap);
         }
-
-        AutoPermissions.Companion.loadAllPermissions(this, 101);
+        //AutoPermissions.Companion.loadAllPermissions(this, 101);      media permission
     }
 
     @Override
@@ -69,13 +68,13 @@ public class MainActivity extends AppCompatActivity implements AutoPermissionsLi
             file = createFile();
         }
         Uri fileUri = FileProvider.getUriForFile(this, "law.cam.lawcam.intent.fileprovider", file);
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);        //Ask for a camera
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, 101);
         }
     }
-/*
+
     private File createFile() {
         String filename = "capture.jpg";
         File storageDir = Environment.getExternalStorageDirectory();
@@ -83,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements AutoPermissionsLi
 
         return outFile;
     }
-*/
+
     @Override
     public void onDenied(int requestCode, String[] permissions) {
         Toast.makeText(this, "permissions denied : " + permissions.length,
