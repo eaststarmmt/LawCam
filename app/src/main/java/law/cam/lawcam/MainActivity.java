@@ -10,14 +10,19 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import com.pedro.library.AutoPermissions;
+import com.pedro.library.AutoPermissionsListener;
+
 import java.io.File;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AutoPermissionsListener {
     ImageView imageView;
     File file;
 
@@ -32,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
             imageView.setImageBitmap(bitmap);
         }
+
+        AutoPermissions.Companion.loadAllPermissions(this, 101);
     }
 
     @Override
@@ -51,6 +58,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        AutoPermissions.Companion.parsePermissions(this, requestCode, permissions, this);
+    }
+
     public void takePicture() {
         if(file == null) {
             file = createFile();
@@ -62,12 +75,24 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(intent, 101);
         }
     }
-
+/*
     private File createFile() {
         String filename = "capture.jpg";
         File storageDir = Environment.getExternalStorageDirectory();
         File outFile = new File(storageDir, filename);
 
         return outFile;
+    }
+*/
+    @Override
+    public void onDenied(int requestCode, String[] permissions) {
+        Toast.makeText(this, "permissions denied : " + permissions.length,
+                Toast.LENGTH_LONG);
+    }
+
+    @Override
+    public void onGranted(int requestCode, String[] permissions) {
+        Toast.makeText(this, "permissions granted: " + permissions.length,
+                Toast.LENGTH_LONG).show();
     }
 }
