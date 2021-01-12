@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements AutoPermissionsLi
 
             imageView.setImageBitmap(bitmap);
         }
-        //AutoPermissions.Companion.loadAllPermissions(this, 101);      media permission
+        AutoPermissions.Companion.loadAllPermissions(this, 101); //     media permission
     }
 
     @Override
