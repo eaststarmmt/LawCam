@@ -1,6 +1,8 @@
 package law.cam.lawcam;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -15,12 +17,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import com.pedro.library.AutoPermissions;
 import com.pedro.library.AutoPermissionsListener;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements AutoPermissionsListener {
     ImageView imageView;
@@ -48,12 +53,14 @@ public class MainActivity extends AppCompatActivity implements AutoPermissionsLi
         imageView = findViewById(R.id.imageView);
 
         ImageButton camButton = findViewById(R.id.camButton);
+        String camPermission = Manifest.permission.CAMERA;
         camButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 takePicture();
             }
         });
+        AutoPermissions.Companion.loadAllPermissions(this, 101);
 
     }
 
