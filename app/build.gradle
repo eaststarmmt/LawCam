@@ -1,6 +1,9 @@
 plugins {
     id 'com.android.application'
 }
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def googleVisionKey = properties.getProperty('google.vision.key')
 
 android {
     compileSdkVersion 29
@@ -13,6 +16,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [googleVisionKey:googleVisionKey]
     }
 
     buildTypes {
@@ -21,7 +25,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         buildTypes.each {
-            it.buildConfigField('String', 'API_KEY', "\"AIzaSyB60YRCfg6LXYgxt2vYMYYRTgOMHv1AEt4\"")
+            it.buildConfigField('String', 'API_KEY', "\"" + googleVisionKey + "\"")
         }
     }
     compileOptions {
@@ -38,8 +42,8 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    implementation 'com.google.api-client:google-api-client-android:1.23.0' exclude module: 'httpclient'
-    implementation 'com.google.http-client:google-http-client-gson:1.23.0' exclude module: 'httpclient'
+    implementation 'com.google.api-client:google-api-client-android:1.23.0' exclude module: 'httpUrlConnection'
+    implementation 'com.google.http-client:google-http-client-gson:1.23.0' exclude module: 'httpUrlConnection'
     implementation 'com.google.apis:google-api-services-vision:v1-rev369-1.23.0'
 
 }

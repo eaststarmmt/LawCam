@@ -25,14 +25,14 @@ public class PackageManagerUtils {
      */
     public static String getSignature(@NonNull PackageManager pm, @NonNull String packageName) {
         try {
-            PackageInfo packageInfo = pm.getPackageInfo(packageName, PackageManager.GET_SIGNATURES);
+            PackageInfo packageInfo = pm.getPackageInfo(packageName, PackageManager.GET_SIGNING_CERTIFICATES);
             if (packageInfo == null
-                    || packageInfo.signatures == null
-                    || packageInfo.signatures.length == 0
-                    || packageInfo.signatures[0] == null) {
+                    || packageInfo.signingInfo.getApkContentsSigners() == null
+                    || packageInfo.signingInfo.getApkContentsSigners().length == 0
+                    || packageInfo.signingInfo.getApkContentsSigners()[0] == null) {
                 return null;
             }
-            return signatureDigest(packageInfo.signatures[0]);
+            return signatureDigest(packageInfo.signingInfo.getApkContentsSigners()[0]);
         } catch (PackageManager.NameNotFoundException e) {
             return null;
         }
