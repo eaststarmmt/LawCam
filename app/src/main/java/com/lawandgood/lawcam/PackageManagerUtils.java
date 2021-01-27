@@ -1,4 +1,4 @@
-package law.cam.lawcam;
+package com.lawandgood.lawcam;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;

@@ -1,4 +1,4 @@
-package law.cam.lawcam;
+package com.lawandgood.lawcam;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;

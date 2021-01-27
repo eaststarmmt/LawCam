@@ -1,4 +1,4 @@
-package law.cam.lawcam;
+package com.lawandgood.lawcam;
 
 import org.junit.Test;
 
